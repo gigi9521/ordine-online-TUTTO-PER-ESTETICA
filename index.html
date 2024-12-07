@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invia via WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #25d366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Invia un messaggio via WhatsApp con la data di oggi</h1>
+
+    <!-- Visualizza la data del giorno -->
+    <p><strong>Data di oggi:</strong> <span id="currentDate"></span></p>
+
+    <!-- Campo di testo per inserire il messaggio -->
+    <textarea id="userMessage" placeholder="Scrivi il tuo messaggio qui..." rows="4" cols="50"></textarea><br>
+
+    <!-- Bottone per inviare via WhatsApp -->
+    <button onclick="sendMessage()">Invia su WhatsApp</button>
+
+    <script>
+        // Funzione per mostrare la data del giorno
+        function displayCurrentDate() {
+            const date = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = date.toLocaleDateString('it-IT', options);
+            document.getElementById('currentDate').textContent = formattedDate;
+        }
+
+        // Funzione per inviare il messaggio su WhatsApp
+        function sendMessage() {
+            const userMessage = document.getElementById('userMessage').value;
+            const currentDate = document.getElementById('currentDate').textContent;
+            
+            if (userMessage.trim() === "") {
+                alert("Per favore, scrivi un messaggio!");
+                return;
+            }
+
+            // Codifica il messaggio in formato URL
+            const message = encodeURIComponent(`${userMessage}\n\nData di oggi: ${currentDate}`);
+            
+            // Crea il link WhatsApp
+            const whatsappLink = `https://wa.me/?text=${message}`;
+            
+            // Apri WhatsApp con il messaggio precompilato
+            window.open(whatsappLink, "_blank");
+        }
+
+        // Visualizza la data del giorno appena carica la pagina
+        window.onload = displayCurrentDate;
+    </script>
+
+</body>
+</html>
